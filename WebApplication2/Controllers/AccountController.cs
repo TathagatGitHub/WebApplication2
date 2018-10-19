@@ -79,6 +79,7 @@ namespace WebApplication2.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
+                    Session["MyMenu"] = null;
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
@@ -392,6 +393,7 @@ namespace WebApplication2.Controllers
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut();
+            Session["MyMenu"] = null;
             return RedirectToAction("Index", "Home");
         }
 

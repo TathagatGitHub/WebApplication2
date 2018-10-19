@@ -1,0 +1,78 @@
+﻿@model IEnumerable<Microsoft.AspNet.Identity.EntityFramework.IdentityRole>
+@*@{
+        /**/
+
+        var menus = new[]
+                    {
+    //new { LinkText="Home", ActionName="Index",ControllerName="Home",Roles="All"  },
+    //new { LinkText="About", ActionName="About",ControllerName="Home",Roles="Anonymous"  },
+    //new { LinkText="Contact", ActionName="Contact",ControllerName="Home",Roles="Anonymous"  },
+    new { LinkText="Dashboard", ActionName="Index",ControllerName="Dealer",Roles="View"  },
+    new { LinkText="Dashboard", ActionName="Index",ControllerName="Admin",Roles="Admin"  },
+    new { LinkText="Administration", ActionName="GetUsers",ControllerName="Admin",Roles="Admin"  },
+    new { LinkText="My Profile", ActionName="GetDealerInfo",ControllerName="Dealer",Roles="View,Configuration"  },
+    new { LinkText="Products", ActionName="GetProducts",ControllerName="Product",Roles="View,Admin"  },
+    new { LinkText="Search", ActionName="SearchProducts",ControllerName="Product",Roles="Configuration,View,Admin"  },
+    new { LinkText="Purchase History", ActionName="GetHistory",ControllerName="Product",Roles="Configuration"  },
+
+    };
+    }*@
+
+@if (User.Identity.IsAuthenticated)
+{
+   // String[] roles = Roles.GetRolesForUser();
+
+    if (User.IsInRole("Admin"))
+    {
+
+        <ul class="nav navbar-nav">
+            <li>@Html.ActionLink("Home", "Index", "Home")</li>
+            <li>@Html.ActionLink("About", "About", "Home")</li>
+            <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+            <li>@Html.ActionLink("Dashboard", "Dashboard", "Home")</li>
+        </ul>
+
+
+    }
+    if (User.IsInRole("View"))
+    {
+        <ul class="nav navbar-nav">
+            <li>@Html.ActionLink("Home", "Index", "Home")</li>
+            <li>@Html.ActionLink("About", "About", "Home")</li>
+            <li>@Html.ActionLink("Products", "Contact", "Home")</li>
+            <li>@Html.ActionLink("Search", "Dashboard", "Home")</li>
+        </ul>
+
+    }
+}
+
+
+/**/
+
+
+
+@*<ul id="menu">
+        @if (HttpContext.Current.User.Identity.IsAuthenticated)
+        {
+            String[] roles = Roles.GetRolesForUser();
+            var links = from item in menus
+                        where item.Roles.Split(new String[] { "," }, StringSplitOptions.RemoveEmptyEntries)
+                        .Any(x => roles.Contains(x) || x == "All")
+                        select item;
+            foreach (var link in links)
+            {
+                @: <li> @Html.ActionLink(link.LinkText, link.ActionName, link.ControllerName)</li>
+            }
+        }
+        else
+        {
+            var links = from item in menus
+                        where item.Roles.Split(new String[] { "," }, StringSplitOptions.RemoveEmptyEntries)
+                        .Any(x => new String[] { "All", "Anonymous" }.Contains(x))
+                        select item;
+            foreach (var link in links)
+            {
+                @: <li> @Html.ActionLink(link.LinkText, link.ActionName, link.ControllerName)</li>
+            }
+        }
+    </ul>*@
